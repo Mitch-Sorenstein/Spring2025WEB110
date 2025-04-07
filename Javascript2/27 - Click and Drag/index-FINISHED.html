@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click and Drag</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://fav.farm/✅" />
+</head>
+<body>
+  <div class="items">
+    <div class="item item1" data-message="First Item - Hover over me!">01</div>
+    <div class="item item2" data-message="According to">02</div>
+    <div class="item item3" data-message="all known">03</div>
+    <div class="item item4" data-message="laws of ">04</div>
+    <div class="item item5" data-message="aviation, there">05</div>
+    <div class="item item6" data-message="is no">06</div>
+    <div class="item item7" data-message="way that">07</div>
+    <div class="item item8" data-message="a bee">08</div>
+    <div class="item item9" data-message="should be">09</div>
+    <div class="item item10" data-message="able to">10</div>
+    <div class="item item11" data-message="fly. It's">11</div>
+    <div class="item item12" data-message="wings are">12</div>
+    <div class="item item13" data-message="too small">13</div>
+    <div class="item item14" data-message="to get">14</div>
+    <div class="item item15" data-message="its fat">15</div>
+    <div class="item item16" data-message="little body">16</div>
+    <div class="item item17" data-message="off the">17</div>
+    <div class="item item18" data-message="ground. The">18</div>
+    <div class="item item19" data-message="bee of">19</div>
+    <div class="item item20" data-message="course flies">20</div>
+    <div class="item item21" data-message="anyways because">21</div>
+    <div class="item item22" data-message="bees don't">22</div>
+    <div class="item item23" data-message="care what">23</div>
+    <div class="item item24" data-message="humans think">24</div>
+    <div class="item item25" data-message="is impossible.">25</div>
+  </div>
+
+<script>
+  const slider = document.querySelector('.items');
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;  // stop the fn from running
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 3;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  document.querySelectorAll('.item').forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    console.log(`You hovered over: ${item.textContent}`);
+  });
+});
+
+</script>
+
+  </body>
+</html>
