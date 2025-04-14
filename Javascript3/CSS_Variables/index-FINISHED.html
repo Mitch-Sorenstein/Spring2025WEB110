@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+  <link rel="icon" href="https://fav.farm/✅" />
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+  </div>
+
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+  <!-- 📦 Second styled square to show the values -->
+  <div class="info-box">
+    <p><strong>Blur:</strong> <span id="blur-value">10px</span></p>
+    <p><strong>Spacing:</strong> <span id="spacing-value">10px</span></p>
+    <p><strong>Base Color:</strong> <span id="base-value">#ffc600</span></p>
+  </div>
+
+  <style>
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width: 100px;
+    }
+
+    /* Info box */
+    .info-box {
+      width: 800px;
+      height: 500px;
+      margin: 20px auto;
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      color: #000;
+      box-sizing: border-box;
+    }
+
+    .info-box p {
+      margin: 10px 0;
+    }
+  </style>
+
+  <script>
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || '';
+      const value = this.value + suffix;
+      document.documentElement.style.setProperty(`--${this.name}`, value);
+
+      if (this.name === "blur") {
+        document.getElementById("blur-value").textContent = value;
+      } else if (this.name === "spacing") {
+        document.getElementById("spacing-value").textContent = value;
+      } else if (this.name === "base") {
+        document.getElementById("base-value").textContent = this.value;
+      }
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+  </script>
+</body>
+</html>

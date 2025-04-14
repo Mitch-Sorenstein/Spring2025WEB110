@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Key Detection</title>
+    <script type="text/javascript" src="./cornify.js"></script>
+    <link rel="icon" href="https://fav.farm/✅" />
+    <style>
+      body {
+        background: #1e1e1e;
+        color: white;
+        font-family: sans-serif;
+        overflow: hidden;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+      }
+
+      .key-float {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 1;
+        animation: fadeOut 5s forwards;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const pressed = [];
+      const secretCode = "wesbos";
+
+      window.addEventListener("keyup", (e) => {
+        const key = e.key;
+        console.log(key);
+        pressed.push(key);
+        pressed.splice(
+          -secretCode.length - 1,
+          pressed.length - secretCode.length
+        );
+        if (pressed.join("").includes(secretCode)) {
+          console.log("DING DING!");
+          cornify_add();
+        }
+
+        const span = document.createElement("span");
+        span.textContent = key;
+        span.classList.add("key-float");
+
+        const size = Math.floor(Math.random() * 30) + 20;
+        const rotate = Math.floor(Math.random() * 60) - 30;
+        span.style.fontSize = `${size}px`;
+        span.style.transform += ` rotate(${rotate}deg)`;
+
+        const offsetX = Math.random() * window.innerWidth;
+        const offsetY = Math.random() * window.innerHeight;
+        span.style.left = `${offsetX}px`;
+        span.style.top = `${offsetY}px`;
+
+        document.body.appendChild(span);
+
+        setTimeout(() => {
+          span.remove();
+        }, 5000);
+      });
+    </script>
+  </body>
+</html>
